@@ -1,0 +1,30 @@
+img {
+  height: 200px;
+  width: 300px;
+}
+
+.down {
+  position:absolute;
+  top:69vh;
+}
+
+#five {
+  float: right;
+  position: fixed;
+  margin-top: 2%;
+  margin-left: 76.7%;
+  padding-right: 0%;
+}
+
+#zero {
+  float: left;
+  position: fixed;
+  margin-top: 2%;
+  margin-right: 75.5%;
+}
+
+#btn {
+  left: 44%;
+  margin-top: 8%;
+  position: fixed;
+}
