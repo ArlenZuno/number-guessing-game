@@ -1,0 +1,181 @@
+<!-- 
+    Number guessing game
+    
+    - generates random number between 1 and the max number the user provide (can't be zero)
+    - characters and empty guesses are invalid
+    - 0 is an automatic game over
+    - there is a maximum 5 tries to guess the right answer
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="icon" href="https://www.shareicon.net/download/2017/03/07/880939_media_512x512.png" />
+
+    <title>Number Game</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btn").click(function () {
+                location.reload(startGame())
+            })
+        })
+
+        let gameBegin = false
+
+        function startGame() {
+            while (!gameBegin) {
+                getName()
+                gameBegin = true
+                break
+            } return getMaxFromUser()
+        }
+
+        function getName() {
+            let userName = prompt('Yooo, name? ')
+            console.log(`Saaaap homie ${userName}, we about to guess some numbers or whaaa?`)
+            return alert('WDAP ' + userName.toUpperCase() + '!')
+        }
+
+        let maxNum = ''
+
+        function getMaxFromUser() {
+            var num = prompt('Hooks a number... ')
+            if (isNaN(num)) {
+                alert('Seriously bro? I asked you to pass a digit.')
+                getMaxFromUser()
+            } else if (Number(num) === 0) {
+                alert('Not zero...')
+                getMaxFromUser()
+            } else {
+                alert('You picked the number ' + num + '. Now let\'s play! You can only guess a maximum of 3 times to get the right answer, so don\'t be dumb.')
+                maxNum = Number(num)
+                getGuessFromUser(generateRandomNumber(maxNum))
+            } return maxNum
+        }
+
+        let ranNum = ''
+
+        function generateRandomNumber(max) {
+            let goal = Math.floor(Math.random() * max + 1)
+            console.log(`random number generated: ${goal}`)
+            ranNum = goal
+            return ranNum
+        }
+
+        let count = 0
+
+        function getGuessFromUser(ranNum) {
+            let goalX = ranNum
+            let guess = prompt(`I\'m thinking of a number between 1 and ${maxNum}, what is it?`)
+            count += 1
+            return isGuessCorrect(goalX, Number(guess))
+        }
+
+        function isGuessCorrect(goal, guess) {
+            let answer = false
+            do {
+                if (guess === 0) {
+                    alert('Yo are ya dumb bud? I said 1 to ' + maxNum + '. Game Over!')
+                    break
+                } else if (count === 5) {
+                    alert('Bruh.... I told you not to be dumb and use up all your 5 attempts, game over!')
+                    break
+                } else if (guess < goal) {
+                    alert('Shaaa, that\'s too low...')
+                    getGuessFromUser(goal)
+                    break
+                } else if (guess > goal) {
+                    alert('Too high!')
+                    getGuessFromUser(goal)
+                    break
+                } else if (isNaN(guess)) {
+                    alert('Bruh I told you I was thinking of a number...')
+                    getGuessFromUser(goal)
+                    break
+                } else {
+                    alert(`Ayy, das wsup it only took you ${count} times to guess the right answer.`)
+                    alert('Press the \'Start Game\' button if you want to play again!')
+                    break
+                }
+            }
+            while (guess !== goal)
+            return answer = true
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <!-- top row numbers 1-4 -->
+    <div class='row'>
+        <div class='d-none d-sm-block col-sm-3 gif'>
+            <img src='./img/one.gif' alt='one' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 gif'>
+            <img src='./img/two.gif' alt='two' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 gif'>
+            <img src='./img/three.gif' alt='three' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 gif'>
+            <img src='./img/four.gif' alt='four' />
+        </div>
+    </div>
+
+    <!-- 0 fixed on the left -->
+    <div class='d-none d-sm-block' id='zero'>
+        <img src='./img/zero.gif' alt='zero' />
+    </div>
+
+    <!-- button to start the game -->
+    <input id="btn" class="btn-lg btn-secondary" type="button" value="START GAME" />
+
+    <!-- 5 fixed to the right -->
+    <div class='d-none d-sm-block' id='five'>
+        <img src='./img/five.gif' alt='five' />
+    </div>
+
+    <!-- bottom numbers 6-9 -->
+    <div class='row down'>
+        <div class='d-none d-sm-block col-sm-3 bottom'>
+            <img src='./img/nine.gif' alt='nine' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 bottom'>
+            <img src='./img/eight.gif' alt='eight' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 bottom'>
+            <img src='./img/seven.gif' alt='seven' />
+        </div>
+        <div class='d-none d-sm-block col-sm-3 bottom'>
+            <img src='./img/six.gif' alt='six' />
+        </div>
+    </div>
+
+
+</body>
+
+</html>
